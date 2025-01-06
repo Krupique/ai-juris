@@ -1,3 +1,5 @@
 ignore/
 .venv/
 notebooks/scrapping_data/
+notebooks/model/
+notebooks/train_results/
