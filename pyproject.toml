@@ -23,6 +23,7 @@ torchaudio = {version = "^2.5.1+cu118", source = "pytorch"}
 absl-py = "^2.1.0"
 rouge-score = "^0.1.2"
 accelerate = "^1.2.1"
+protobuf = "^5.29.2"
 
 [[tool.poetry.source]]
 name = "pytorch"
