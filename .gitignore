@@ -3,3 +3,7 @@ ignore/
 notebooks/scrapping_data/
 notebooks/model/
 notebooks/train_results/
+train_results/
+models/
+data/
+app/__pycache__
