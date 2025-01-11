@@ -1,12 +1,4 @@
 import sys
-import pandas as pd
-import numpy as np
-import nltk
-import shutil
-import evaluate
-from datasets import load_dataset
-from transformers import T5Tokenizer, DataCollatorForSeq2Seq
-from transformers import T5ForConditionalGeneration, Seq2SeqTrainingArguments, Seq2SeqTrainer
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 
 
