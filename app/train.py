@@ -1,4 +1,5 @@
 import sys
+import json
 import pandas as pd
 import numpy as np
 import nltk
@@ -72,18 +73,18 @@ class AiJuris():
         # Returns the result of ROUGE metric
         return result
     
-    def create_trainer(self):
+    def create_trainer(self, config):
         # Define the train arguments
         self.training_args = Seq2SeqTrainingArguments(output_dir = "train_results",
                                                       evaluation_strategy = "epoch",
-                                                      learning_rate = 3e-4,
+                                                      learning_rate = config["train"]["learning_rate"],
                                                       logging_dir = "logs_treino",
                                                       logging_steps = 1,
-                                                      per_device_train_batch_size = 4,
-                                                      per_device_eval_batch_size = 2,
-                                                      weight_decay = 0.01,
-                                                      save_total_limit = 1,
-                                                      num_train_epochs = 1,
+                                                      per_device_train_batch_size = config["train"]["per_device_train_batch_size"],
+                                                      per_device_eval_batch_size = config["train"]["per_device_eval_batch_size"],
+                                                      weight_decay = config["train"]["weight_decay"],
+                                                      save_total_limit = config["train"]["save_total_limit"],
+                                                      num_train_epochs = config["train"]["num_train_epochs"],
                                                       predict_with_generate = True,
                                                       push_to_hub = False)
         
@@ -99,7 +100,6 @@ class AiJuris():
 
     def train(self):
         self.trainer.train()
-
         self.trainer.save_model("models/saved_model")
 
 
@@ -111,9 +111,13 @@ if __name__ == "__main__":
 
     else:            
         filename = sys.argv[1]
-        aijuris = AiJuris(filename)
+        with open("app/config/train_config.json", "r") as f:
+            config = json.load(f)
 
-        aijuris.create_trainer()
+        print(config)
+        
+        aijuris = AiJuris(filename)
+        aijuris.create_trainer(config)
         aijuris.train()
 
 
