@@ -1,3 +1,4 @@
+import sys
 import pandas as pd
 import numpy as np
 import nltk
@@ -19,8 +20,26 @@ class AiJurisEval():
 
 
     def generate_text(self, input_text):
-        tokenized_input_text = self.tokenizer_final(input_text, return_tensors="pt").input_ids
+        tokenized_input_text = self.final_tokenizer(input_text, return_tensors="pt").input_ids
 
         tokenized_output_text = self.model.generate(tokenized_input_text, max_length = 100, temperature = 0.3, do_sample=True)
 
-        output_text = self.tokenizer_final.decode(tokenized_output_text[0], skip_special_tokens=True)
+        output_text = self.final_tokenizer.decode(tokenized_output_text[0], skip_special_tokens=True)
+
+        return output_text
+
+
+
+if __name__ == "__main__":
+
+     # Load dataset
+    if len(sys.argv) < 2:
+        print("Input the prompt")
+
+    else:
+        prompt = sys.argv[1]
+        aijuris =  AiJurisEval()
+
+        output_text = aijuris.generate_text(prompt)
+        print(output_text)
+        
